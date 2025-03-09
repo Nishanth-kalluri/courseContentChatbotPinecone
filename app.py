@@ -44,22 +44,16 @@ with st.sidebar:
     env_status = check_environment_variables()
     
     # Data loading section
-    st.subheader("Data Management")
-    load_disabled = not env_status
-    
-    if st.button("Load Course Catalog Data", disabled=load_disabled):
-        with st.spinner("Loading data... This may take several minutes if embeddings need to be created"):
-            st.session_state.vectorstore = load_data()
-            st.session_state.data_loaded = True
+    if not st.session_state.data_loaded:
+        if env_status:
+            with st.spinner("Loading data... This may take several minutes if embeddings need to be created"):
+                st.session_state.vectorstore = load_data()
+                st.session_state.data_loaded = True
             st.success("✅ Data loaded successfully!")
-    
-    # Show data status
-    if st.session_state.data_loaded:
-        st.success("Data is loaded and ready for queries")
-    elif not env_status:
-        st.error("API keys not found. Please set up your .env file.")
+        else:
+            st.error("API keys not found. Please set up your .env file.")
     else:
-        st.warning("Please load data before chatting")
+        st.success("Data is loaded and ready for queries")
     
     # Add a button to clear chat history
     if st.button("Clear Chat History"):
