@@ -40,14 +40,11 @@ def initialize_pinecone():
 
 def load_data():
     """Load and process data with Pinecone integration"""
-    # Initialize Pinecone
     if not initialize_pinecone():
         return None
         
-    # Create embeddings instance
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     
-    # Check if vectors already exist in Pinecone
     pinecone_api_key = os.environ.get("PINECONE_API_KEY")
     pc = Pinecone(api_key=pinecone_api_key)
     index = pc.Index(PINECONE_INDEX_NAME)

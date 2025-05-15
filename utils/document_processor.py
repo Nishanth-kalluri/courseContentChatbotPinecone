@@ -5,8 +5,6 @@ from utils.document_loader import download_pdf, download_webpage, get_pdf_urls, 
 
 def extract_doc_ids(text, url):
     """Extract document IDs for tracking source URLs"""
-    # Extract course codes or unique identifiers from the text
-    # This is a simplified version - in practice, you'd need a more robust pattern
     course_codes = re.findall(r'\b[A-Z]{2,4}\s\d{4}[A-Z]?\b', text)
     doc_id_to_url = {}
     for course_code in course_codes:
